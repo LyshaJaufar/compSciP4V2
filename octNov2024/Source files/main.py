@@ -27,10 +27,10 @@ class Character:
 
     def CalculateScore(self, eventType, difficulty):
         skillsMap = {
-            "jump": self.__jump,
-            "swim": self.__swim,
-            "run": self.__run,
-            "drive": self.__drive
+            "jump": self.jump,
+            "swim": self.swim,
+            "run": self.run,
+            "drive": self.drive
         }
 
         successTable = {
@@ -48,7 +48,7 @@ class Character:
             difference = difficulty - skillLevel
             return successTable[difference]
 
-
+# EventItem Objects
 Group = []
 
 # Data for the events
@@ -62,4 +62,39 @@ events = [
 
 for name, event_type, difficulty in events:
     Group.append(EventItem(name, event_type, difficulty))
+
+# Create an instance for each of the characters: Tarz & Geni
+Tarz = Character("Tarz", 5, 3, 5, 1)
+Geni = Character("Geni", 2, 2, 3, 4)
+
+Points = {
+    "Tarz": 0,
+    "Geni": 0
+}
+
+for event in Group:
+    # calculate percentage chance of completing event
+    eventType = event.getType()
+    difficulty = event.getDifficulty()
+
+    chances = {
+        "Tarz": Tarz.CalculateScore(eventType, difficulty),
+        "Geni": Geni.CalculateScore(eventType, difficulty)
+    }
+
+    winner = max(chances, key=chances.get)
+
+    if chances["Tarz"] == chances["Geni"]:
+        print(event.getName(), "is a draw")
+    else:
+        Points[winner] += 1
+        print(winner, "won")
+
+if Points["Tarz"] > Points["Geni"]:
+    print("Tarz won with", Points["Tarz"], "points")
+elif Points["Geni"] > Points["Tarz"]:
+    print("Geni won with", Points["Geni"], "points")
+else:
+    print("draw")
+
 
