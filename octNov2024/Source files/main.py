@@ -22,17 +22,17 @@ class Character:
         self.run = run                    
         self.drive = drive       
 
-        self.skills = {  
-            "jump": jump,
-            "swim": swim,
-            "run": run,
-            "drive": drive
-        }
-
     def GetName(self):
         return self.characName
 
     def CalculateScore(self, eventType, difficulty):
+        skillsMap = {
+            "jump": self.__jump,
+            "swim": self.__swim,
+            "run": self.__run,
+            "drive": self.__drive
+        }
+
         successTable = {
             1: 80,
             2: 60,
@@ -40,12 +40,13 @@ class Character:
             4: 20
         }
 
-        skillLevel = self.skills.get(eventType, None)
+        skillLevel = skillsMap[eventType]
+
         if skillLevel >= difficulty:
             return  100
         else: 
             difference = difficulty - skillLevel
-            return successTable.get(difference, None)
+            return successTable[difference]
 
 
 Group = []
