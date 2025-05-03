@@ -33,9 +33,20 @@ class Character:
         return self.characName
 
     def CalculateScore(self, eventType, difficulty):
-        successTable = {1: 80, 2: 60, 3: 40, 4: 20}
+        successTable = {
+            1: 80,
+            2: 60,
+            3: 40,
+            4: 20
+        }
 
         skillLevel = self.skills.get(eventType, None)
+        if skillLevel >= difficulty:
+            return  100
+        else: 
+            difference = difficulty - skillLevel
+            return successTable.get(difference, None)
+
 
 Group = []
 
